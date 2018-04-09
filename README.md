@@ -66,32 +66,31 @@ seg.set_distance_threshold(max_distance)
 inliers, coefficients = seg.segment()
 ```
 
-Using all three code snippets above the final output image looks something like this.
+Using all three code snippets above the final output image looks something like this.  These point cloud files were saved locally to the directory I was working in and the image udner manipulation was static.  to verify that my code was working correctly i had to call pcl_viewer from the terminal window to see the effects each of the filters had on the original image.
 
 ### Ex1 extracted outliers
 
 ![](./pics/extracted_outliers.PNG)
 
+### Ex 2
+The purpose of exercise two was to take the code developed from exercise 1 and implement it such that it subscribes to a camera in the gazebo environement and publishes the manipulated point cloud to a topic which can be viewed in in Rviz.  Clusetering is also a goal of ex-2.  We use a a Euclidean clustering algortithm to detect the point clouds and then segment them and color each individual point cloud differently so that it is easy to see.     
 
-### Generic DH transformation matrix
+### Clustered Point cloud
+![](./pics/pcl_cluster.PNG)
 
-![](./pics/gen_DH_matrix.PNG)
+## Ex 3
+Exercise 3 was an introduction to color and normal histograms along with Support Vector Machines and how they can be used together.  Obtaining historgrams packed with color and normal information was explored in a jupyter notebook.  different images were uploaded and then the rgb and hsv histograms were displayed to explore the differences between the pictures.  The number of bins can have a large impact on the accuracy of the histograms.  the number of bins relates to how many seperate categories will the histogram output compute. This was one of the historgrams of an image that I analyzed within a jupyter notebook, I choose to include it because it is simple to understand.  The piece of brocoli is largely green therefore the RGB histogram developed show only values in green.  If I had increased the number of bins there would be more variation the green region.
 
+### RGB HSV histogram for brocoli
 
-### Transformation matrix frame 0 to 2
+![](./pics/brocoli_histogram.PNG)
 
-![](./pics/transformation_matrix_T0_2.PNG)
+In oreder to train the SVM a large number of samples had to be collected of the objects that were to be labeled.  This was accomplished with a training.launch file within the sensor_stick directory and features.py and capture_features.py and features.py.  Features.py was responsible for calculating the histograms and capture features.py controlled the number of samples to be captured.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final traing_set captured a sample collection of 150 samples per item was captured with the number of bins set to 32 this yielded the following confustion matrix.
 
-### Transformation matrix frame 2 to 4
+### Normalized Confusion Matrix Ex 3
 
-![](./pics/transformation_matrix_T2_4.PNG)
+![](./pics/norm_conf_matrix.PNG)
 
-### Transformation matrix frame 4 to 6
-
-![](./pics/transformation_matrix_T4_6.PNG)
-### Transformation matrix frame 0 to 2
-
-![](./pics/transformation_matrix_T0_EE.PNG)
 
 ### Inverse Kinematics
 The approach used for finding the joing angles of the robotic arm as a function of the end effector postion consisted of breaking the robot into two seperate parts.  The wrist center comprised of 3 revolute joints and the first 3 joints of the robot leading up to the wrist center.  Although numerical methods exist to compute all 6 joint angles it can be difficult to arrive at the correct set of solutions without an accurate guess.  Computational time for numberical procedures can take signifigant periods of tie depending on the complexity and hardware used. There will be multiple answers for each joint angle but the joints themselves impose their own constraints depending on the joint type ie. (does the joint move in that direction or past a certain degree limit).  Because of these limitations and ease of calculation an analytical or closed form solution was used.  Mapping the geometry of the first 3 joints or up to the wrist center one can find the joint angles with simple geometry.  Angela Sodelman's videos on youtube were a big help in vizualization and methods to find the first 3 joint angles.  I opted to utilize the schematic provided from Udacity in the the inverse kinematics section.
