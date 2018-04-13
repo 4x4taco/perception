@@ -123,7 +123,7 @@ trajectory_sampler_snip.PNG
 
 ### World 2 output with labels
 
-![](./pics/world2_output.PNGG)
+![](./pics/world2_output.PNG)
 
 ### World 3 output with labels 1/2
 
