@@ -75,6 +75,53 @@ Using all three code snippets above the final output is shown below.  These poin
 ### Ex 2
 Exercise two started with the code developed from exercise 1 and connected it to a subscriber interfaced with a camera in the Gazebo environement and publish the manipulated point cloud to a topic which could be viewed in in Rviz.  Euclidean clustering with k-d trees was used to cluster the point clouds and extract the segmented objects.  These objects had the point clouds converted to just x y z data removing the color portion of the point cloud.  A random color generator was then used to display the geometry point clouds with random different colors.       
 
+```python
+# TODO: Euclidean Clustering
+    white_cloud = XYZRGB_to_XYZ(extracted_outliers) 
+    #Create k-d tree from converted point cloud    
+    tree = white_cloud.make_kdtree()
+    #Create euclidean cluster extraction object
+    ec = white_cloud.make_EuclideanClusterExtraction()
+    #set euclidian cluster settings to cluster by    
+    ec.set_ClusterTolerance(0.01)
+    ec.set_MinClusterSize(20)
+    ec.set_MaxClusterSize(20000)
+    #Search the k-d tree for clusters
+    ec.set_SearchMethod(tree)
+    #Extract indices for each of the discovered clusters
+    cluster_indices = ec.Extract()
+```
+
+```python
+ # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
+    # to loop through a array and assign values to r g b and list item  
+    color_cluster_point_list = []
+
+    #get colors for color list
+    cluster_color = get_color_list(len(cluster_indices))
+    
+    
+    #iterate thought the cluster indices building a nx4 array the length of the color
+    #list with color label     
+    for j, indices in enumerate(cluster_indices):
+        for i, indice in enumerate(indices):
+            color_cluster_point_list.append([white_cloud[indice][0],
+                                             white_cloud[indice][1],
+                                             white_cloud[indice][2],
+                                             rgb_to_float(cluster_color[j])])
+    
+    # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
+    #create new cloud that contains all clusters, each with unique color
+    cluster_cloud = pcl.PointCloud_PointXYZRGB()
+    cluster_cloud.from_list(color_cluster_point_list)
+    
+    
+    # TODO: Convert PCL data to ROS messages
+    ros_cloud_objects = pcl_to_ros(extracted_outliers)
+    ros_cloud_table = pcl_to_ros(extracted_inliers)
+    ros_cluster_cloud = pcl_to_ros(cluster_cloud)
+```
+
 ### Clustered Point cloud
 ![](./pics/pcl_cluster.PNG)
 
@@ -86,6 +133,44 @@ Exercise 3 was an introduction to color and normal histograms along with Support
 ![](./pics/brocoli_histogram.PNG)
 
 In order to train the SVM a large number of samples had to be collected of the objects in ordere to train the SVM and perform classification.  This was accomplished with the training.launch file within the sensor_stick directory and  capture_features.py / features.py.  Features.py was responsible for calculating the color and normal histograms and capture features.py controlled the number of samples to be captured.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final training_set captured a sample collection of 150 samples per item was captured with the number of bins set to 32 this yielded the following confustion matrix.
+
+```python
+for index, pts_list in enumerate(cluster_indices):
+        # Grab the points for the cluster from the extracted outliers (cloud objects)
+        #these points  #are in the form of XYZRGB
+        pcl_cluster = extracted_outliers.extract(pts_list)
+        print('index')
+        print(index)
+        #print('pts_list')
+        #print(pts_list)      
+        #convert cluster from pcl to ros for transmission through subscriber
+        ros_cloud = pcl_to_ros(pcl_cluster)        
+                
+        # Compute the associated feature vector
+        # Extract histogram features
+        chists = compute_color_histograms(ros_cloud, using_hsv=True)
+        normals = get_normals(ros_cloud)
+        nhists = compute_normal_histograms(normals)
+        feature = np.concatenate((chists, nhists))
+     
+        # Make the prediction
+        # Make the prediction
+        prediction = clf.predict(scaler.transform(feature.reshape(1,-1)))
+        label = encoder.inverse_transform(prediction)[0]
+        detected_objects_labels.append(label)
+          
+        # Publish a label into RViz
+        label_pos = list(white_cloud[pts_list[0]])
+        label_pos[2] +=.4
+        object_markers_pub.publish(make_label(label,label_pos,index))                        
+                    
+        # Add the detected object to the list of detected objects.
+        do = DetectedObject()
+        do.label = label
+        do.cloud = ros_cloud
+        detected_objects.append(do)
+        detected_objects_pub.publish(detected_objects) 
+```
 
 ### Normalized Confusion Matrix Ex 3
 
@@ -110,7 +195,7 @@ In order to train the SVM a large number of samples had to be collected of the o
 
 
 ### Project Implementation
-Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.  I captured 200 samples of each object and trained the svm with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
+Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.  I captured 200 samples of each object wiht number of bins set to 128 for the normal/hsv histograms and trained the SVM with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
 ## SMV Accuracy
 
 ![](./pics/final_acc.PNG)
