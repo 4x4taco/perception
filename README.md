@@ -134,7 +134,7 @@ trajectory_sampler_snip.PNG
 ![](./pics/world3_output_secondhalf.PNG)
 
 ### Conclusion
-Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
+Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  Capturing the screen shots for world 3 was the most difficult.  The looping of pr2.py appeared to slow to keep all of the labels displayed on the output at the same time.  This could have been due to the classification error made on the book.  The SVM classified the book
 
 ### Final SVM confuction matrix
 
