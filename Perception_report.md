@@ -5,7 +5,7 @@ The purpose of the perception project focuses the students to learn about visual
 
 
 ### Ex 1
-Exercise one started with reading in a point cloud through a ros susbscriber and applying a voxel downsampling grid, passthrough filter, Ransac segmentation, and outlier extraction.  The quick steps of this process are: down sample to remove extra un-needed points from the point cloud, cut off the extra part of the scene in the z direction, filter by shapes using RANSAC, and then extract inliers and outliers for the segmented scene.  These 4 steps allowed the user to take some objects on a table and extract only the objects.  The Voxel downsamplig filter takes a sample of the point cloud and extracts the point within a volume element size.  
+Exercise one started with reading in a static point cloud to begin testing the voxel grid downsampling, passthrough filter, Ransac segmentation, and outlier extraction.  The quick steps of this process are: down sample to remove extra un-needed points from the point cloud, cut off the extra part of the scene in the z direction, filter by shapes using RANSAC, and then extract inliers and outliers for the segmented scene.  These 4 steps allowed the user to take some objects on a table and extract only the objects.  The Voxel downsamplig filter takes a sample of the point cloud and extracts the point within a volume element size.  
 
 ```python
 # Create a VoxelGrid filter object for our input point cloud
@@ -66,14 +66,14 @@ seg.set_distance_threshold(max_distance)
 inliers, coefficients = seg.segment()
 ```
 
-Using all three code snippets above the final output is shown below.  These point cloud files were saved locally to the directory I was working in and the image udner manipulation was static.  to verify that my code was working correctly i had to call pcl_viewer from the terminal window to see the effects each of the filters had on the original image.
+Using all three code snippets above the final output is shown below.  These point cloud files were saved locally to the directory I was working in and the image under manipulation was static.  to verify that my code was working correctly I had to call pcl_viewer from the terminal window to see the effects each of the filters had on the original image.
 
 ### Ex1 extracted outliers
 
 ![](./pics/extracted_outliers.PNG)
 
 ### Ex 2
-Exercise two started with  the code developed from exercise 1 and connected it to a subscriber interfaced with a camera in the Gazebo environement and publishes the manipulated point cloud to a topic which can be viewed in in Rviz.  Euclidean clustering with k-d trees was used to cluster the point clouds and extract the segmented objects.  These objects had the point clouds converted to just x y z data removing the color portion of the point cloud.  A random color generator was then used to display the geometry point clouds with random different colors.       
+Exercise two started with the code developed from exercise 1 and connected it to a subscriber interfaced with a camera in the Gazebo environement and publish the manipulated point cloud to a topic which could be viewed in in Rviz.  Euclidean clustering with k-d trees was used to cluster the point clouds and extract the segmented objects.  These objects had the point clouds converted to just x y z data removing the color portion of the point cloud.  A random color generator was then used to display the geometry point clouds with random different colors.       
 
 ### Clustered Point cloud
 ![](./pics/pcl_cluster.PNG)
