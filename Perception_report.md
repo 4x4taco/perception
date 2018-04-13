@@ -1,4 +1,4 @@
-## Project: Perception
+## Udacity Project 3: Perception
 
 ### Introduction  
 The purpose of the perception project focuses the students to learn about visualizing and sorting through arryas of 3d point clouds and the different algorithms that are used to gain useful information about a point cloud and its environment.  The Project consisted of 3 exercises and a final project.  The exercies are designed to take a point cloud and apply different filters to segment a set of objects from an environment, and then extract that object to extract normal and color histogams that can be fed as training data into an SVM for classification.  I will be discussing the details of each of the exercises and the final project.
@@ -223,5 +223,4 @@ Overall I really enjoyed this project and would to explore sending service messa
 ### Final SVM confuction matrix
 
 ![](./pics/final_confmatrix.PNG)
-
 
