@@ -5,7 +5,7 @@ The purpose of the perception project focuses the students to learn about visual
 
 
 ### Ex 1
-Exercise one started with reading in a static point cloud to begin testing the voxel grid downsampling, passthrough filter, Ransac segmentation, and outlier extraction.  The quick steps of this process are: down sample to remove extra un-needed points from the point cloud, cut off the extra part of the scene in the z direction, filter by shapes using RANSAC, and then extract inliers and outliers for the segmented scene.  These 4 steps allowed the user to take some objects on a table and extract only the objects.  The Voxel downsamplig filter takes a sample of the point cloud and extracts the point within a volume element size.  
+Exercise one started with reading in a static point cloud to begin testing the voxel grid downsampling, passthrough filter, Ransac segmentation, and outlier extraction.  The quick steps of this process are: down sample to remove extra un-needed points from the point cloud, cut off the extra part of the scene in the z direction, filter by shapes using RANSAC, and then extract inliers and outliers for the segmented scene.  These 4 steps were able to  take some objects on a table and extract only the objects.  The Voxel downsamplig filter takes a sample of the point cloud and extracts the point within a volume element size.  
 
 ```python
 # Create a VoxelGrid filter object for our input point cloud
@@ -46,7 +46,7 @@ pcl.save(cloud_filtered, filename)
 ```
 I set my values to .6 and 1.1 for the min and max values respectively.  I thought this did the best job of clipping the unwated information from the point cloud.
 
-The next filter applied in exercise one was the RANSAC segmentation.  The purpose of the this filter allows ths user to identify unique shapes within an environment and then choose to extract the objects identified or the objects that represent the outliers.  The code used to accomplish this task is shown below.
+The next filter applied in exercise 1 one was the RANSAC segmentation.  The purpose of this filter allows the user to identify unique shapes within an environment and then choose to extract the objects identified or the objects that represent the outliers.  The code used to accomplish this task is shown below.
 
 ```python
 # Create the segmentation object
@@ -59,21 +59,21 @@ seg.set_method_type(pcl.SAC_RANSAC)
 # Max distance for a point to be considered fitting the model
 # Experiment with different values for max_distance 
 # for segmenting the table
-max_distance = 1
+max_distance = .01
 seg.set_distance_threshold(max_distance)
 
 # Call the segment function to obtain set of inlier indices and model coefficients
 inliers, coefficients = seg.segment()
 ```
 
-Using all three code snippets above the final output is shown below.  These point cloud files were saved locally to the directory I was working in and the image under manipulation was static.  to verify that my code was working correctly I had to call pcl_viewer from the terminal window to see the effects each of the filters had on the original image.
+Using all three code snippets above the final output is shown below.  These point cloud files were saved locally to the directory I was working in and the image under manipulation was static.  To verify that my code was working correctly I had to call pcl_viewer from the terminal window to see the effects each of the filters had on the original image.
 
 ### Ex1 extracted outliers
 
 ![](./pics/extracted_outliers.PNG)
 
 ### Ex 2
-Exercise two started with the code developed from exercise 1 and connected it to a subscriber interfaced with a camera in the Gazebo environement and publish the manipulated point cloud to a topic which could be viewed in in Rviz.  Euclidean clustering with k-d trees was used to cluster the point clouds and extract the segmented objects.  These objects had the point clouds converted to just x y z data removing the color portion of the point cloud.  A random color generator was then used to display the geometry point clouds with random different colors.       
+Exercise two started with the code developed from exercise 1 and connected it to a subscriber interfaced with a camera in the Gazebo environement The exercise 2 script published the manipulated point cloud to a topic which could be viewed in in Rviz.  Euclidean clustering with k-d trees was used to cluster the point clouds and extract the segmented objects.  These objects had the point clouds converted to just x y z data b removing the color portion of the point cloud.  A random color generator was then used to display the geometry point clouds with random different colors.       
 
 ```python
 # TODO: Euclidean Clustering
@@ -132,7 +132,8 @@ Exercise 3 was an introduction to color and normal histograms along with Support
 
 ![](./pics/brocoli_histogram.PNG)
 
-In order to train the SVM a large number of samples had to be collected of the objects in ordere to train the SVM and perform classification.  This was accomplished with the training.launch file within the sensor_stick directory and  capture_features.py / features.py.  Features.py was responsible for calculating the color and normal histograms and capture features.py controlled the number of samples to be captured.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final training_set captured a sample collection of 150 samples per item was captured with the number of bins set to 32 this yielded the following confustion matrix.
+In order to train the SVM a large number of samples had to be collected of the objects in order to train the SVM and perform classification.  This was accomplished with the training.launch file within the sensor_stick directory and  capture_features.py / features.py files.  Features.py was responsible for calculating the color and normal histograms and capture features.py controlled the number of samples to be captured and also the orginization of the data.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final training_set for exercise 3 150 samples per item was captured with the number of bins set to 32 this yielded the following confustion matrix.
+
 
 ```python
 for index, pts_list in enumerate(cluster_indices):
