@@ -117,12 +117,26 @@ Overall I really enjoyed this project and would have like more time to explore s
 
 ### SMV Accuracy
 
-![](./pics/trajectory_sampler_snip.PNG)
+![](./pics/svm_output.PNG)
 
 trajectory_sampler_snip.PNG
-### Project Completion
 
-![](./pics/pickandplace_result.PNG)
+
+### World 1 output with labels
+
+![](./pics/world1_output.PNG)
+
+### World 2 output with labels
+
+![](./pics/world2_output.PNGG)
+
+### World 3 output with labels 1/2
+
+![](./pics/world3_output_first half.PNG)
+
+### World 3 output with labels 2/2
+
+![](./pics/world3_output_second half.PNG)
 
 ### Conclusion
 overall I found this project very interesting and a useful process to have starting my path down the software side of robotics.  I found the most difficult information to process was the DH parameter configuration, especially the combination of the frames at the wrist center.  Watching tutorials on Youtube a different DH instruction set was used but I understand that combining the frames at the wrist center actually simplifies the transforms between the frames.  Going forward I would like to spend more time trying to understand ROS industrial software for path planning.  the IK_server script worked okay but in a tight spot or manufacturing environment the user would want the paths to be as optimized as possible.  this would decrease excessive wear on robot components and decrease the time it takes to  perform a pick and place operation.
