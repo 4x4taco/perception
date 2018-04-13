@@ -132,7 +132,11 @@ Exercise 3 was an introduction to color and normal histograms along with Support
 
 ![](./pics/brocoli_histogram.PNG)
 
-In order to train the SVM a large number of samples had to be collected of the objects in order to train the SVM and perform classification.  This was accomplished with the training.launch file within the sensor_stick directory and  capture_features.py / features.py files.  Features.py was responsible for calculating the color and normal histograms and capture features.py controlled the number of samples to be captured and also the orginization of the data.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final training_set for exercise 3 150 samples per item was captured with the number of bins set to 32 this yielded the following confustion matrix.
+In order to train the SVM a large number of samples had to be collected of the objects in order to train the SVM and perform classification.  This was accomplished with the training.launch file within the sensor_stick directory and  capture_features.py / features.py files.  Features.py was responsible for calculating the color and normal histograms and capture features.py controlled the number of samples to be captured and also the orginization of the data.  I started with low values for the number of samples captured to estimate the number of samples to obtain an accuracy of at least 80% for the overall probability.  For the final training_set for exercise 3 150 samples per item were captured with the number of bins set to 32 this yielded the following confustion matrix. The code snippet below shows the code added to identify the clusters and attach labels representing what the cluster is classified as.
+
+### Normalized Confusion Matrix Ex 3
+
+![](./pics/norm_conf_matrix.PNG)
 
 
 ```python
@@ -173,11 +177,7 @@ for index, pts_list in enumerate(cluster_indices):
         detected_objects_pub.publish(detected_objects) 
 ```
 ### Project Implementation
-Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.
-### Normalized Confusion Matrix Ex 3
-
-![](./pics/norm_conf_matrix.PNG)
-
+Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small groups of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my sample color scheme to  train my SVM classifier.
 
 ### Hsv only confusion matrix
 
@@ -194,7 +194,7 @@ Using the same method as used for exercise 3 a set of samples for the 8 new item
 ![](./pics/rgb_feature_vec.PNG)
 
 
-I captured 200 samples of each object wiht number of bins set to 128 for the normal/hsv histograms and trained the SVM with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
+I captured 200 samples of each object with the number of bins set to 128 for the normal/hsv histograms and trained the SVM with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
 ## SMV Accuracy
 
 ![](./pics/final_acc.PNG)
@@ -218,7 +218,7 @@ trajectory_sampler_snip.PNG
 ![](./pics/world3_output_secondhalf.PNG)
 
 ### Conclusion
-Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects.  The hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process.  When taking snips of the classifiation output on screen the screen shots for world 3 were the most difficult.  The looping of pr2.py appeared to slow to keep all of the labels displayed on the output at the same time.  This could have been due to the classification error made on the book.  The label for snacks is dropped and an extra label for glue appears.  I was unsure if this is due to a formatting issue with the labels or an error made by the classifier.  All of the other worlds and pick lists appeared correct with no classification errors.  The output .yaml files were 100% correct with respect to the pick list 1 and 2.  The output .yaml file for picklist 3 had an extra glue request but it still had the snack request.
+Overall I really enjoyed this project and would to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects.  The hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process.  When taking snips of the classifiation output on screen the screen shots for world 3 were the most difficult.  The looping of pr2.py appeared to slow to keep all of the labels displayed on the output at the same time.  The label for snacks is dropped and an extra label for glue appears.  I was unsure if this is due to a formatting issue with the labels or an error made by the classifier.  All of the other worlds and pick lists were correct with no classification errors.  The output .yaml files were 100% correct with respect to the pick list 1 and 2.  The output .yaml file for picklist 3 had an extra glue request but it still had the snack request.
 
 ### Final SVM confuction matrix
 
