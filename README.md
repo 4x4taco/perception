@@ -94,7 +94,7 @@ In oreder to train the SVM a large number of samples had to be collected of the 
 
 ### Frame 0 to 3 inverse kinematic diagram
 
-![](./pics/0_3_inv_kin_diagram.PNG)
+![](./pics/hsv_feature_vec.PNG)
 
 
 ### Inverse kinematic frame 3 to EE
@@ -106,9 +106,9 @@ In oreder to train the SVM a large number of samples had to be collected of the 
 Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples 25 for each item.  Comparing the normalized confusion matrices with each other it can be determined that (((inserts stats))).  Calling the pick and place project using ```roslaunch pr2_robot pick_place_project.launch``` and ```rosrun pr2_robot pr2.py``` was all that was needed to get this project up and running.  After the code had been tested successfully within the 1st world modifications were made to the ```pick_place_project.launch``` file to spawn the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was changed to reflect the correct output file land test scene.  
 
 ### Conclusion
-Overall I really enjoyed this project and would have like more time to explore send service messages to the robot and therefore manipulating the joints in the Rviz and gazeob environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
+Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazeob environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
 
-### trajectory_sampler code addition
+### SMV Accuracy
 
 ![](./pics/trajectory_sampler_snip.PNG)
 
