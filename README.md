@@ -110,17 +110,12 @@ In oreder to train the SVM a large number of samples had to be collected of the 
 
 
 ### Project Implementation
-Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Comparing the normalized confusion matrices with each other it can be determined that (((inserts stats))).  Calling the pick and place project using ```roslaunch pr2_robot pick_place_project.launch``` and ```rosrun pr2_robot pr2.py``` was all that was needed to get this project up and running.  After the code had been tested successfully within the 1st world modifications were made to the ```pick_place_project.launch``` file to spawn the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was changed to reflect the correct output file land test scene.  
-
-### Conclusion
-Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazeob environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
-
-### SMV Accuracy
+Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.  I captured 200 samples of each object and trained the svm with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
+## SMV Accuracy
 
 ![](./pics/svm_output.PNG)
 
 trajectory_sampler_snip.PNG
-
 
 ### World 1 output with labels
 
@@ -139,6 +134,10 @@ trajectory_sampler_snip.PNG
 ![](./pics/world3_output_second half.PNG)
 
 ### Conclusion
-overall I found this project very interesting and a useful process to have starting my path down the software side of robotics.  I found the most difficult information to process was the DH parameter configuration, especially the combination of the frames at the wrist center.  Watching tutorials on Youtube a different DH instruction set was used but I understand that combining the frames at the wrist center actually simplifies the transforms between the frames.  Going forward I would like to spend more time trying to understand ROS industrial software for path planning.  the IK_server script worked okay but in a tight spot or manufacturing environment the user would want the paths to be as optimized as possible.  this would decrease excessive wear on robot components and decrease the time it takes to  perform a pick and place operation.
+Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
+
+### Final SVM confuction matrix
+
+![](./pics/Training_set.PNG)
 
 
