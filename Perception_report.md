@@ -171,7 +171,8 @@ for index, pts_list in enumerate(cluster_indices):
         detected_objects.append(do)
         detected_objects_pub.publish(detected_objects) 
 ```
-
+### Project Implementation
+Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.
 ### Normalized Confusion Matrix Ex 3
 
 ![](./pics/norm_conf_matrix.PNG)
@@ -192,10 +193,7 @@ for index, pts_list in enumerate(cluster_indices):
 ![](./pics/rgb_feature_vec.PNG)
 
 
-
-
-### Project Implementation
-Using the same method as used for exercise 3 a set of samples for the 8 new items had to be captured.  I wanted to compare the impact of different color schemes to the accuracy in which the items could be identified with respect to the SVM.  I ran small grops of samples, 25 for each item.  Looking at the confusion matrices for the hsv and rgb sample I choose to go with hsv for my main sample set to tain my svm classifier.  I captured 200 samples of each object wiht number of bins set to 128 for the normal/hsv histograms and trained the SVM with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
+I captured 200 samples of each object wiht number of bins set to 128 for the normal/hsv histograms and trained the SVM with a rbf kernel.  After the code had been tested successfully within the 1st world, modifications were made to the ```pick_place_project.launch``` file.  The modifications changed the spawn option to the 2nd and 3rd worlds and pick lists respectively.  each time the launch file was changed the ```pr2.py``` file was also changed to reflect the correct output file land test scene.  The results with screenshots of each world are shown below.  
 ## SMV Accuracy
 
 ![](./pics/final_acc.PNG)
