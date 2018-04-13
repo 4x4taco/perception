@@ -127,11 +127,11 @@ trajectory_sampler_snip.PNG
 
 ### World 3 output with labels 1/2
 
-![](./pics/world3_output_first half.PNG)
+![](./pics/world3_output_first%20half.PNG)
 
 ### World 3 output with labels 2/2
 
-![](./pics/world3_output_second half.PNG)
+![](./pics/world3_output_second%20half.PNG)
 
 ### Conclusion
 Overall I really enjoyed this project and would have like more time to explore sending service messages to the robot and manipulating the joints in the Rviz and gazebo environment.  My SVM did a good job recognizing the objects with (((insert accuracies))) the hardest part about this project was obtaining the samples from the ```training.launch``` environment.  I had issues with the system locking op or crashing.  Gazebo occasionally would crash during this process and mess up my ```training_sav``` file.  I really enjoyed the introduction to SVM and going forward will continue to explore the world of machine learning.
